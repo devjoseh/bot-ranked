@@ -148,6 +148,7 @@ export function baseCommandLog(data: GenericCommandData) {
     const [icon, type] = getCommandTitle(data.type);
 
     baseStorage.loadLogs.commands
+    // .push(ck.green(`・ ${ck.blue("/"+data.name)} carregado!`))
     .push(ck.green(`${icon} ${type} ${ck.gray(">")} ${ck.blue.underline(data.name)} ✓`));
 };
 

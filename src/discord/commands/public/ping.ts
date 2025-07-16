@@ -9,3 +9,4 @@ createCommand({
 		await interaction.reply({ content: `Pong! ${Date.now() - interaction.createdTimestamp}ms` });
 	}
 });
+ 

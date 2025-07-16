@@ -1,3 +1,7 @@
+// MESSAGES
+export * from "./messages/central/bot.js";
+export * from "./messages/central/panel.js";
+
 import CacheManager from "./utils/cache.js";
 export const cacheManager = new CacheManager();
 
