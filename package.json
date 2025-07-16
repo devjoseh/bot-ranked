@@ -37,21 +37,11 @@
     "#functions": [
       "./build/functions/index.js"
     ],
-    "#menus": [
-      "./build/menus/index.js"
-    ],
     "#settings": [
       "./build/settings/index.js"
     ],
-    "#tools": [
-      "./build/tools/index.js"
-    ],
-    "#server": [
-      "./build/server/index.js"
-    ],
-    "#lib": [
-      "./build/lib/index.js"
+    "#emojis": [
+      "./emojis.json"
     ]
-  },
-  "baseVersion": "1.3.5"
+  }
 }

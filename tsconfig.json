@@ -29,7 +29,6 @@
 			"#base": ["./discord/base/index.ts"],
 			"#functions": ["./functions/index.ts"],
 			"#settings": ["./settings/index.ts"],
-			"#server": ["./server/index.ts"],
 			"#emojis": ["../emojis.json"],
 			"@discordjs/builders/*": ["ignore"]
 		}
