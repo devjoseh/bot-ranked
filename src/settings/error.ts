@@ -5,7 +5,7 @@ import { logger } from "./logger.js";
 import { env } from "#settings";
 import ck from "chalk";
 
-export async function baseErrorHandler(error: any, client: Client<true>){
+export async function baseErrorHandler(error: any, client: Client<true>) {
     if (client?.user) logger.log(client.user.displayName);
 
     const errorMessage: string[] = [];
@@ -33,7 +33,7 @@ export async function baseErrorHandler(error: any, client: Client<true>){
     new WebhookClient({ url: process.env.WEBHOOK_LOGS_URL! }).send({ embeds: [embed] }).catch(logger.error);
 }
 
-function exit(){
+function exit() {
     logger.log("")
     logger.log(ck.dim("👋 Até mais"));
     logger.log("")

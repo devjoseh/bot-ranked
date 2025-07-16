@@ -16,18 +16,18 @@ type ResolveKeys<T extends StringRecord | RecordKeys> =
 
 export class URLStore<S extends StringRecord | RecordKeys = StringRecord, K extends RecordKeys = ResolveKeys<S>> {
     private url = new URL("https://discord.com");
-    private get lengthLimit(){
+    private get lengthLimit() {
         return EmbedLimit.URL;
     }
-    constructor(url?: string | null){
-        if (url && url.length <= this.lengthLimit){
+    constructor(url?: string | null) {
+        if (url && url.length <= this.lengthLimit) {
             this.url = new URL(url);
         }
     }
-    public get length(){
+    public get length() {
         return this.toString().length;
     }
-    public get record(){
+    public get record() {
         return Array.from(this.url.searchParams.entries())
         .reduce(
             (params, [key, value]) => 
@@ -38,34 +38,34 @@ export class URLStore<S extends StringRecord | RecordKeys = StringRecord, K exte
     public get(key: K): string | undefined {
         return this.url.searchParams.get(key) ?? undefined;
     }
-    public canBeSet(key: string, value: string){
+    public canBeSet(key: string, value: string) {
         const mock = new URL(this.url.toString());
         mock.searchParams.set(key, value);
         return mock.toString().length <= this.lengthLimit;
     }
-    public set(key: K, value: string | number){
+    public set(key: K, value: string | number) {
         const canBeSet = this.canBeSet(key, value.toString());
-        if (canBeSet){
+        if (canBeSet) {
             this.url.searchParams.set(key, value.toString());
         }
         return canBeSet;
     }
-    public has(key: K, value?: string){
+    public has(key: K, value?: string) {
         return this.url.searchParams.has(key, value);
     }
-    public delete(key: K, value?: string){
+    public delete(key: K, value?: string) {
         this.url.searchParams.delete(key, value);
     }
-    public toString(){
+    public toString() {
         return this.url.toString();
     }
-    public toMap(){
+    public toMap() {
         return new Map(this.url.searchParams.entries());
     }
-    public keys(){
+    public keys() {
         return this.url.searchParams.keys();
     }
-    public values(){
+    public values() {
         return this.url.searchParams.values();
     }
 }

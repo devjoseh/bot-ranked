@@ -21,7 +21,7 @@ Object.assign(globalThis, Object.freeze({
 	disabled: true,
 	autocomplete: true,
 	__rootname: process.cwd(),
-	rootTo(...path: string[]){
+	rootTo(...path: string[]) {
 		return join(process.cwd(), ...path);
 	}
 }));

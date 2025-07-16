@@ -5,7 +5,7 @@ createCommand({
 	name: "ping",
 	description: "Replies with pong 🏓",
 	type: ApplicationCommandType.ChatInput,
-	async run(interaction){
+	async run(interaction) {
 		await interaction.reply({ content: `Pong! ${Date.now() - interaction.createdTimestamp}ms` });
 	}
 });

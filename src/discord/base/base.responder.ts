@@ -50,7 +50,7 @@ type GenericResponderData = ResponderData<string, readonly ResponderType[], any,
 export type ResponderRouter = RouterContext<GenericResponderData>;
 export type GenericResponderInteraction = MessageComponentInteraction<CacheType> | ModalSubmitInteraction<CacheType>;
 
-function getResponderType(interaction: MessageComponentInteraction | ModalSubmitInteraction){
+function getResponderType(interaction: MessageComponentInteraction | ModalSubmitInteraction) {
     return interaction.isButton() ? ResponderType.Button : 
     interaction.isStringSelectMenu() ? ResponderType.StringSelect : 
     interaction.isChannelSelectMenu() ? ResponderType.ChannelSelect : 
@@ -61,21 +61,21 @@ function getResponderType(interaction: MessageComponentInteraction | ModalSubmit
     interaction.isModalSubmit() ? ResponderType.Modal : undefined;
 }
 
-export async function baseResponderHandler(interaction: MessageComponentInteraction | ModalSubmitInteraction){
+export async function baseResponderHandler(interaction: MessageComponentInteraction | ModalSubmitInteraction) {
     const onNotFound = baseStorage.config.responders.onNotFound;
     const responderType = getResponderType(interaction);
-    if (!responderType){
+    if (!responderType) {
         onNotFound?.(interaction);
         return;
     }
 
     const handler = findRoute(baseStorage.responders, responderType, interaction.customId);
-    if (!handler){
+    if (!handler) {
         onNotFound?.(interaction);
         return;
     }
 
-    if (handler.params && handler.data.parse){
+    if (handler.params && handler.data.parse) {
         handler.params=handler.data.parse(handler.params);
     }
 
@@ -90,7 +90,7 @@ export async function baseResponderHandler(interaction: MessageComponentInteract
     
     await handler.data.run(interaction as never, params)
     .catch(err => {
-        if (onError){
+        if (onError) {
             onError(err, interaction, params);
             return;
         }
@@ -98,7 +98,7 @@ export async function baseResponderHandler(interaction: MessageComponentInteract
     });
 }
 
-export function baseResponderLog(customId: string, type: string){
+export function baseResponderLog(customId: string, type: string) {
     baseStorage.loadLogs.responders
     .push(ck.green(spaceBuilder("・ " + ck.green(type), ck.cyan(customId), "carregado!")))
 }

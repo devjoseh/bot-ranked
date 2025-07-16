@@ -19,7 +19,7 @@ interface SetupCreatorsOptions {
     responders?: ResponderCreatorOptions;
     events?: EventCreatorOptions;
 }
-export function setupCreators(options: SetupCreatorsOptions = {}){
+export function setupCreators(options: SetupCreatorsOptions = {}) {
     
     /** @commands */
     baseStorage.config.commands.guilds = options.commands?.guilds??[];
@@ -42,11 +42,11 @@ export function setupCreators(options: SetupCreatorsOptions = {}){
             Name extends string = string, 
             DmPermission extends boolean = false,
             Type extends CommandType = ApplicationCommandType.ChatInput
-        >(data: CommandData<Name, DmPermission, Type>){
+        >(data: CommandData<Name, DmPermission, Type>) {
             /** @defaults */
             data.type??=ApplicationCommandType.ChatInput as Type
             data.dmPermission??=false as DmPermission;
-            if (options.commands?.defaultMemberPermissions){
+            if (options.commands?.defaultMemberPermissions) {
                 data.defaultMemberPermissions??=options.commands?.defaultMemberPermissions;
             }
             /** @store */
@@ -57,7 +57,7 @@ export function setupCreators(options: SetupCreatorsOptions = {}){
         },
         createEvent: function<
             EventName extends keyof ClientEvents
-        >(data: EventData<EventName>){
+        >(data: EventData<EventName>) {
             /** @store */
             const events = baseStorage.events.get(data.event) ?? new Collection();
             
@@ -72,13 +72,13 @@ export function setupCreators(options: SetupCreatorsOptions = {}){
             const Types extends readonly ResponderType[], 
             Schema, 
             Cache extends CacheType = CacheType,
-        >(data: ResponderData<Path, Types, Schema, Cache>){
+        >(data: ResponderData<Path, Types, Schema, Cache>) {
             /** @store */
             const { customId } = data;
 
             const types = Array.from(new Set(data.types).values());
 
-            for(const type of types){
+            for(const type of types) {
                 addRoute(baseStorage.responders, type, customId, data);
                 baseResponderLog(customId, type);
             };

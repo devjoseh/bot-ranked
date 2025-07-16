@@ -7,7 +7,7 @@ try {
    logger.log(chalk.blue("Connecting to MongoDB..."));
    await mongoose.connect(env.MONGO_URI, { dbName: "database" });
    logger.success(chalk.green("MongoDB connected"));
-} catch(err){
+} catch(err) {
    logger.error(err);
    process.exit(1);
 }

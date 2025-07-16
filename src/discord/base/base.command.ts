@@ -43,7 +43,7 @@ export type CommandData<
 
 export type GenericCommandData = CommandData<any, any, any>;
 
-export async function baseCommandHandler(interaction: CommandInteraction){
+export async function baseCommandHandler(interaction: CommandInteraction) {
 	const { onNotFound, middleware, onError } = baseStorage.config.commands;
     const command = baseStorage.commands.get(interaction.commandName);
 
@@ -58,7 +58,7 @@ export async function baseCommandHandler(interaction: CommandInteraction){
 
     await command.run(interaction as never)
     .catch(err => {
-        if (onError){
+        if (onError) {
             onError(err, interaction);
             return;
         }
@@ -66,11 +66,11 @@ export async function baseCommandHandler(interaction: CommandInteraction){
     });
 }
 
-export async function baseAutocompleteHandler(interaction: AutocompleteInteraction){
+export async function baseAutocompleteHandler(interaction: AutocompleteInteraction) {
     const command = baseStorage.commands.get(interaction.commandName);
-    if (command && "autocomplete" in command && command.autocomplete){
+    if (command && "autocomplete" in command && command.autocomplete) {
         const choices = await command.autocomplete(interaction);
-        if (choices && Array.isArray(choices)){
+        if (choices && Array.isArray(choices)) {
             interaction.respond(choices.slice(0, 25));
         }
     };
@@ -92,7 +92,7 @@ export async function baseRegisterCommands(client: Client<true>) {
         .then(commands => {
             if (!commands.size) return;
             messages.push(ck.green(`Foram carregados ${commands.size} comandos globalmente!`));
-            if (baseStorage.config.commands.verbose){
+            if (baseStorage.config.commands.verbose) {
                 messages.push(...verbooseLogs(commands));
             }
         });
@@ -100,7 +100,7 @@ export async function baseRegisterCommands(client: Client<true>) {
             await guild.commands.set(guildCommands)
             .then(commands => {
                 messages.push(ck.green(`Foram carregados ${commands.size} comandos no servidor ${ck.cyan(guild.name)}!`))
-                if (baseStorage.config.commands.verbose){
+                if (baseStorage.config.commands.verbose) {
                     messages.push(...verbooseLogs(commands));
                 }
             });
@@ -115,7 +115,7 @@ export async function baseRegisterCommands(client: Client<true>) {
     await client.application.commands.set(commands)
     .then(commands => {
         messages.push(ck.green(`Foram carregados ${commands.size} comandos globalmente!`));
-        if (baseStorage.config.commands.verbose){
+        if (baseStorage.config.commands.verbose) {
             messages.push(...verbooseLogs(commands));
         }
     });
@@ -123,7 +123,7 @@ export async function baseRegisterCommands(client: Client<true>) {
     logger.log(linesBuilder(messages));
 }
 
-function verbooseLogs(commands: Collection<string, ApplicationCommand>){
+function verbooseLogs(commands: Collection<string, ApplicationCommand>) {
     const u = ck.underline;
     return commands.map(({ id, name, type: commandType, client, createdAt, guild }) => {
         const [icon] = getCommandTitle(commandType);
@@ -144,14 +144,14 @@ function verbooseLogs(commands: Collection<string, ApplicationCommand>){
     });
 }
 
-export function baseCommandLog(data: GenericCommandData){
+export function baseCommandLog(data: GenericCommandData) {
     const [icon, type] = getCommandTitle(data.type);
 
     baseStorage.loadLogs.commands
     .push(ck.green(`${icon} ${type} ${ck.gray(">")} ${ck.blue.underline(data.name)} ✓`));
 };
 
-function getCommandTitle(type: ApplicationCommandType){
+function getCommandTitle(type: ApplicationCommandType) {
     return type === ApplicationCommandType.Message ? ["{☰}", "Message context menu"] :
     type === ApplicationCommandType.User ? ["{☰}", "User context menu"] :
     ["{/}", "Slash command"]

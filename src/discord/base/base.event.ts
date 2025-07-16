@@ -13,25 +13,25 @@ type GenericEventData = EventData<keyof ClientEvents>;
 
 export type EventsCollection = Collection<string, GenericEventData>;
 
-export function baseRegisterEvents(client: Client){
+export function baseRegisterEvents(client: Client) {
     const collection = baseStorage.events.filter((_,key) => key !== "ready");
 
-    for(const [key, events] of collection.entries()){
+    for(const [key, events] of collection.entries()) {
         client.on(key, (...args) => {
-            for(const data of events.values()){
+            for(const data of events.values()) {
                 baseEventHandler(data, args);
             }
         });
     }
 }
 
-export async function baseEventHandler(data: GenericEventData, args: GenericEventArgs){
+export async function baseEventHandler(data: GenericEventData, args: GenericEventArgs) {
     const { middleware, onError } = baseStorage.config.events;
 
     let isBlock = false;
     const tags = data.tags??[];
     const block = (...selected: string[]) => {
-        if (selected.length>=1 && selected.some(tag => tags.includes(tag))){
+        if (selected.length>=1 && selected.some(tag => tags.includes(tag))) {
             isBlock = true;
         }
         if (tags.length < 1) isBlock = true;
@@ -44,19 +44,19 @@ export async function baseEventHandler(data: GenericEventData, args: GenericEven
 
     await data.run(...args)
     .catch(err => {
-        if (onError){
+        if (onError) {
             onError(err, eventData);
             return;
         }
         throw err;
     });
     
-    if (data.once){
+    if (data.once) {
         baseStorage.events.get(data.event)?.delete(data.name);
     };
 }
 
-export function baseEventLog(data: GenericEventData){
+export function baseEventLog(data: GenericEventData) {
     baseStorage.loadLogs.events
     .push(ck.green(`・ ${ck.yellow(`${data.name}`)} ${ck.gray(">")} ${ck.yellow(data.event)} carregado!`))
 };
