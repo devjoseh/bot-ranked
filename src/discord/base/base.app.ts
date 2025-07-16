@@ -4,7 +4,6 @@ import { baseEventHandler, baseRegisterEvents } from "./base.event.js";
 import { baseResponderHandler } from "./base.responder.js";
 import { baseErrorHandler, env, logger } from "#settings";
 import { CustomItents, CustomPartials } from "#functions";
-import { runtimeDisplay } from "./base.version.js";
 import { baseStorage } from "./base.storage.js";
 import { glob } from "@reliverse/reglob";
 import ck from "chalk";
@@ -27,11 +26,10 @@ export async function bootstrap(options: BootstrapOptions) {
     }
     
     logger.log();
-    logger.log(ck.blue(`★ Constatic Base`));
     logger.log(
-        `${ck.hex("#5865F2")("◌ discord.js")} ${ck.dim(djsVersion)}`,
-        "|",
-        runtimeDisplay
+        `${ck.blue("discord.js")} ${ck.yellow("v"+djsVersion)}`,
+        "/",
+        `${ck.green("NodeJs")} ${ck.yellow("v"+process.versions.node)}`,
     );
     
     baseRegisterEvents(client);
@@ -69,7 +67,7 @@ function createClient(token: string, options: BootstrapOptions) {
             .fetch()
             .catch(() => null);
             
-        logger.log(ck.green(`● ${ck.greenBright.underline(client.user.username)} online ✓`))
+        logger.log(ck.green(`${client.user.username}#${client.user.discriminator} Online!`))
         
         await baseRegisterCommands(client);
 

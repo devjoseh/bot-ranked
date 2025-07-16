@@ -77,8 +77,6 @@ export async function baseAutocompleteHandler(interaction: AutocompleteInteracti
 }
 
 export async function baseRegisterCommands(client: Client<true>) {
-    const plural = (value: number) => value > 1 ? "s" : "";
-
     const guilds = client.guilds.cache.filter(
         ({ id }) => baseStorage.config.commands.guilds.includes(id)
     );
@@ -93,9 +91,7 @@ export async function baseRegisterCommands(client: Client<true>) {
         await client.application.commands.set(globalCommands)
         .then(commands => {
             if (!commands.size) return;
-            messages.push(ck.greenBright(
-                `└ ${commands.size} command${plural(commands.size)} successfully registered globally!`
-            ));
+            messages.push(ck.green(`Foram carregados ${commands.size} comandos globalmente!`));
             if (baseStorage.config.commands.verbose){
                 messages.push(...verbooseLogs(commands));
             }
@@ -103,9 +99,7 @@ export async function baseRegisterCommands(client: Client<true>) {
         for (const guild of guilds.values()) {
             await guild.commands.set(guildCommands)
             .then(commands => {
-                messages.push(ck.greenBright(
-                    `└ ${commands.size} command${plural(commands.size)} registered in ${ck.underline(guild.name)} guild successfully!`
-                ))
+                messages.push(ck.green(`Foram carregados ${commands.size} comandos no servidor ${ck.cyan(guild.name)}!`))
                 if (baseStorage.config.commands.verbose){
                     messages.push(...verbooseLogs(commands));
                 }
@@ -120,9 +114,7 @@ export async function baseRegisterCommands(client: Client<true>) {
     const commands = Array.from(baseStorage.commands.values());
     await client.application.commands.set(commands)
     .then(commands => {
-        messages.push(ck.greenBright(
-            `└ ${commands.size} command${plural(commands.size)} successfully registered globally!`
-        ));
+        messages.push(ck.green(`Foram carregados ${commands.size} comandos globalmente!`));
         if (baseStorage.config.commands.verbose){
             messages.push(...verbooseLogs(commands));
         }
@@ -156,7 +148,7 @@ export function baseCommandLog(data: GenericCommandData){
     const [icon, type] = getCommandTitle(data.type);
 
     baseStorage.loadLogs.commands
-    .push(ck.green(`${icon} ${type} ${ck.gray(">")} ${ck.blue.underline(data.name)} ✓`))
+    .push(ck.green(`${icon} ${type} ${ck.gray(">")} ${ck.blue.underline(data.name)} ✓`));
 };
 
 function getCommandTitle(type: ApplicationCommandType){

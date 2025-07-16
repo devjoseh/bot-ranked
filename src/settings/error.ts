@@ -34,7 +34,9 @@ export async function baseErrorHandler(error: any, client: Client<true>){
 }
 
 function exit(){
-    logger.log(ck.dim("..."));
+    logger.log("")
+    logger.log(ck.dim("👋 Até mais"));
+    logger.log("")
     process.exit(0);
 }
 

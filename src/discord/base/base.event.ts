@@ -57,7 +57,6 @@ export async function baseEventHandler(data: GenericEventData, args: GenericEven
 }
 
 export function baseEventLog(data: GenericEventData){
-    const u = ck.underline;
     baseStorage.loadLogs.events
-    .push(`${ck.yellow(`☉ ${data.name}`)} ${ck.gray(">")} ${u.yellowBright(data.event)} ${ck.green(`event ✓`)}`)
+    .push(ck.green(`・ ${ck.yellow(`${data.name}`)} ${ck.gray(">")} ${ck.yellow(data.event)} carregado!`))
 };

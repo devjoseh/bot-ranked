@@ -5,6 +5,10 @@ import { logger } from "./logger.js";
 export * from "./error.js";
 import "./global.js";
 
+import moment from 'moment-timezone'
+moment.locale("pt-br")
+moment.tz.setDefault("America/Sao_Paulo")
+
 const env = validateEnv(envSchema);
 
-export { settings, logger, env };
+export { settings, logger, env, moment };
