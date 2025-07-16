@@ -19,7 +19,7 @@
   "explorer.fileNesting.patterns": {
     ".env": ".env*",
     "settings.json": "emojis.json, emojis.dev.json",
-    "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb, tsconfig.json, .eslintrc.json, .gitignore, biome.json"
+    "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb, tsconfig.json, .eslintrc.json, .gitignore, biome.json, .editorconfig"
   },
   "typescript.suggest.autoImports": true,
 }
